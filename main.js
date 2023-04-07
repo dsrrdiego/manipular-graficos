@@ -11,17 +11,20 @@ canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal'});
 
+let obj;
 function mouseCheck(e){
     borrar();
     let seleccionado=false;
-    let obj;
+    if (modo=='normal'){
     for (x=0;x<10 && !seleccionado;x++){
         obj=figura[x].checkMouse(e.x,e.y);
         if (obj) {
             seleccionado=true;
         }
     }
+}
     if (modo=='arrastrar'&& obj) {
+        // obj.marcar();
         obj.setCoords(e.x,e.y);
     }
     
