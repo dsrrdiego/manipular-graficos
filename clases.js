@@ -49,16 +49,16 @@ class Circulo extends Figura{
 
     checkMouse(x,y){
         // console.log('toquing'+ Math.sqrt( x-this.x*x-this.x+y-this,2) ) )
-        if (!seleccionado){
-            if (Math.sqrt(Math.pow(x-this.x,2)+Math.pow(y-this.y,2))<this.radio){
-                  this.marcar();
-                  
-                 return true;
-         }}else {
-            
+        if (Math.sqrt(Math.pow(x-this.x,2)+Math.pow(y-this.y,2))<this.radio){
+            this.marcar();
+            return this;
+        }else {
             return false;
-    
         }
+    }
+    setCoords(x,y){
+        this.x=x;
+        this.y=y;
     }
 }
 
@@ -85,8 +85,14 @@ class Rectangulo extends Figura{
         if (x>this.x && x < this.x+this.ancho
             && y>this.y && y<this.y+this.alto) {
                 this.marcar();
-                return true }
+                return this }
             else {return false};
 
-        }
+    }
+    setCoords(x,y){
+        this.x=x-this.ancho/2;
+        this.y=y-this.alto/2;
+
+    }
+
 }

@@ -21,9 +21,8 @@ function mouseCheck(e){
             seleccionado=true;
         }
     }
-    if (modo=='arrastrar') {
-        obj.x=e.x;
-        obj.y=e.y;
+    if (modo=='arrastrar'&& obj) {
+        obj.setCoords(e.x,e.y);
     }
     
     // console.log('mouser'+e.x+ '  '+e.y);
