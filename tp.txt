@@ -1,0 +1,25 @@
+arreglar el scroll
+
+
+Trabajo requerido:
+•Dibujar figuras de diferente tamaño en posiciones al azar del canvas utilizando
+clases y objetos. Las figuras pueden ser círculos, rectángulos, etc.
+
+•Implementar funcionalidad para verificar si un punto se encuentra dentro de una
+figura. Usar la posición del mouse como punto a verificar. Agregar los métodos
+correspondientes al diseño del ejercicio anterior.
+
+•Implementar la funcionalidad necesaria para mover las figuras dentro del canvas:
+
+a. Mover una figura seleccionada utilizando el mouse (arrastrar) requerido
+
+b. Mover una figura seleccionada utilizando el teclado. Para Bonus.
+
+
+Modalidad de entrega:
+Por correo electrónico a la dirección interfacesdeusuarioeinterac@gmail.com o por
+Moodle en el recurso tarea asignado para el trabajo entregable 1, el formato esperado es
+enlace git o .ZIP.
+Asunto: TPE1 Apellido, Nombres
+Cuerpo: De ser necesario, algún instructivo para la modalidad de uso del trabajo.
+Adjunto: Archivo comprimido con el trabajo
