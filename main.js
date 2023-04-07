@@ -1,45 +1,38 @@
 const canvas=document.getElementById('canvas');
 const ctx=document.getElementById('canvas').getContext('2d');
-
-
-const CANVASANCHO=1000;
-const CANVASALTO=1000;
-const  figura=[];
-let modo='normal';
-
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal'});
-document.addEventListener("keydown", (e)=>{e.preventDefault();
-    console.log(e.key)},false);
+document.addEventListener("keydown", (e)=>{console.log(e.key)},false);
+
+const  figura=[];
+let modo='normal';
 
 
-    
 let obj;
 function mouseCheck(e){
-    borrar();
-    let seleccionado=false;
+    borrarPantalla();
+    let marcada=false;
     if (modo=='normal'){
-    for (x=0;x<10 && !seleccionado;x++){
-        obj=figura[x].checkMouse(e.layerX,e.layerY);
-        if (obj) {
-            seleccionado=true;
+        for (x=0;x<10 && !marcada;x++){
+            obj=figura[x].checkMouse(e.layerX,e.layerY);
+            if (obj) {
+                marcada=true;
+            }
         }
     }
-}
-    if (modo=='arrastrar'&& obj) {
+    else if (modo=='arrastrar'&& obj) {
         // obj.marcar();
         obj.setCoords(e.layerX,e.layerY);
     }
-    
-};
+}
 
 
 
 
-function borrar(){
+function borrarPantalla(){
     ctx.fillStyle='#ffffff';
-    ctx.fillRect(0,0,CANVASALTO,CANVASANCHO);
+    ctx.fillRect(0,0,canvas.width,canvas.height);
     refresh();
 }
 
@@ -49,34 +42,34 @@ function refresh(){
 
 
 function dibujarFiguraAleatoria(tipo, indice){
-    const x=Math.floor(Math.random()*CANVASANCHO-200);
-    const y=Math.floor(Math.random()*CANVASALTO-200);
+    const x=Math.floor(Math.random()*canvas.width-200);
+    const y=Math.floor(Math.random()*canvas.height-200);
     const ancho=Math.floor(Math.random()*100)+20;
     const alto=Math.floor(Math.random()*100)+20;
     const colorR=Math.floor(Math.random()*200)+50;
     const colorG=Math.floor(Math.random()*255);
     const colorB=Math.floor(Math.random()*255);
-    const fill='#'+colorR+colorG+colorB;
-    
+    const fill="#"+colorR.toString(16)+colorG.toString(16)+colorB.toString(16);
+    // console.log(fill)
     switch (tipo){
         case 0:
+            
             figura[indice]=new Rectangulo(x,y,ancho,alto,fill,ctx);
             break;
             case 1:
                 figura[indice]=new Circulo(x,y,ancho,fill,ctx);
                 break;
-                case 2:
-                    // console.log(2);
-                    break;
-                    default:
-            // console.log('defa');
-            
+            case 2:
+                // console.log(2);
+                break;
+                default:
         }
-        // figura[indice].dibujar();
         refresh();
     }
     
-borrar();
+borrarPantalla();
+
+//crear 10 figuras aleatorias
 for (i=0;i<10;i++){
     const figuraTipo=Math.floor(Math.random()*2);
     dibujarFiguraAleatoria(figuraTipo,i);
