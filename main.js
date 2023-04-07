@@ -5,11 +5,10 @@ const ctx=document.getElementById('canvas').getContext('2d');
 const CANVASANCHO=1000;
 const CANVASALTO=1000;
 const  figura=[];
-let seleccionado=false;
 
 canvas.addEventListener('mousemove',function(e){
     borrar();
-    seleccionado=false;
+    let seleccionado=false;
     for (x=0;x<10 && !seleccionado;x++){
         if (figura[x].checkMouse(e.x,e.y)) {
             seleccionado=true;

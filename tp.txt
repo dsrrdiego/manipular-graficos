@@ -1,4 +1,5 @@
 arreglar el scroll
+borrar bien pantalla
 
 
 Trabajo requerido:
