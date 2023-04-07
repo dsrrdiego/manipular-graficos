@@ -10,14 +10,18 @@ let modo='normal';
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal'});
+document.addEventListener("keydown", (e)=>{e.preventDefault();
+    console.log(e.key)},false);
 
+
+    
 let obj;
 function mouseCheck(e){
     borrar();
     let seleccionado=false;
     if (modo=='normal'){
     for (x=0;x<10 && !seleccionado;x++){
-        obj=figura[x].checkMouse(e.x,e.y);
+        obj=figura[x].checkMouse(e.layerX,e.layerY);
         if (obj) {
             seleccionado=true;
         }
@@ -25,10 +29,9 @@ function mouseCheck(e){
 }
     if (modo=='arrastrar'&& obj) {
         // obj.marcar();
-        obj.setCoords(e.x,e.y);
+        obj.setCoords(e.layerX,e.layerY);
     }
     
-    // console.log('mouser'+e.x+ '  '+e.y);
 };
 
 
