@@ -2,7 +2,7 @@ arreglar el scroll
 borrar bien pantalla
 
 
-Trabajo requerido:
+
 •Dibujar figuras de diferente tamaño en posiciones al azar del canvas utilizando
 clases y objetos. Las figuras pueden ser círculos, rectángulos, etc.
 
