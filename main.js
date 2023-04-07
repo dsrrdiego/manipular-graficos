@@ -5,19 +5,32 @@ const ctx=document.getElementById('canvas').getContext('2d');
 const CANVASANCHO=1000;
 const CANVASALTO=1000;
 const  figura=[];
+let modo='normal';
 
-canvas.addEventListener('mousemove',function(e){
+canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
+canvas.addEventListener('mousedown',function(){modo='arrastrar'});
+canvas.addEventListener('mouseup',function(){modo='normal'});
+
+function mouseCheck(e){
     borrar();
     let seleccionado=false;
+    let obj;
     for (x=0;x<10 && !seleccionado;x++){
-        if (figura[x].checkMouse(e.x,e.y)) {
+        obj=figura[x].checkMouse(e.x,e.y);
+        if (obj) {
             seleccionado=true;
-            
         }
+    }
+    if (modo=='arrastrar') {
+        obj.x=e.x;
+        obj.y=e.y;
     }
     
     // console.log('mouser'+e.x+ '  '+e.y);
-})
+};
+
+
+
 
 function borrar(){
     ctx.fillStyle='#ffffff';
