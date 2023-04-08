@@ -1,13 +1,9 @@
-// relleno="#500000";
-
 
 class Figura{
-    constructor(x,y,fill,ctx){
+    constructor(x,y,ctx){
         this.x=x;
         this.y=y;
-        // this.fill=fill;
         this.fill=fondoColor;
-        this.prevFill=fill;
         this.ctx=ctx;
         this.ctx.lineWidth=4;
         this.ctx.strokeStyle='red';
@@ -18,25 +14,22 @@ class Figura{
 
     seleccionar(){
         if (!this.seleccionado){
-            this.prevFill=this.fill;
             this.fill=relleno;
-            // this.fill="#50000090";
             this.seleccionado=true;
         } else{
-            this.fill=this.prevFill;
+            this.fill=fondoColor;
             this.seleccionado=false;
-
         }
     }    
     mover(x,y){
         this.x+=x;
         this.y+=y;
     }
-    
 }
+
 class Circulo extends Figura{
-    constructor(x,y,radio,fill,ctx){
-        super (x,y,fill,ctx);
+    constructor(x,y,radio,ctx){
+        super (x,y,ctx);
         this.radio=radio;
     }
     dibujar(){
@@ -69,8 +62,8 @@ class Circulo extends Figura{
 }
 
 class Rectangulo extends Figura{
-    constructor(x,y,ancho,alto,fill,ctx){
-        super (x,y,fill,ctx);
+    constructor(x,y,ancho,alto,ctx){
+        super (x,y,ctx);
         this.ancho=ancho;
         this.alto=alto;
     }
