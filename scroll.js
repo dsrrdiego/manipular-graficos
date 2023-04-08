@@ -27,8 +27,6 @@ class Barra{
             const calculo=Math.floor(e.layerX*255/this.ancho)-127;
             
             this.funcion(calculo);
-            // this.miPunto=calculo;
-            
         }
     }
 }
