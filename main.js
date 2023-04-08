@@ -6,7 +6,6 @@ canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal';}); 
 canvas.addEventListener('click',function(e){ clickete(e)});
 
-
 document.addEventListener("keydown", (e)=>{tecla(e)});
 
 const  figura=[];
@@ -45,7 +44,7 @@ imagen.onload=function(){
 function engrisar(img){
     for (let i=0;i<img.width *img.height*4;i+=4){ 
         const prom=(img.data[i]+img.data[i+1]+img.data[i+2])/3;
-        img.data[i]=prom   -oscuridad;
+        img.data[i]=prom   +oscuridad;
         img.data[i+1]=prom -oscuridad;
         img.data[i+2]=prom -oscuridad;
     }
