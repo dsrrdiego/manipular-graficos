@@ -2,15 +2,42 @@ const canvas=document.getElementById('canvas');
 const ctx=document.getElementById('canvas').getContext('2d');
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
-canvas.addEventListener('mouseup',function(){modo='normal';}); //if (obj) obj.seleccionar();
+canvas.addEventListener('mouseup',function(){modo='normal';}); 
 canvas.addEventListener('click',function(e){ clickete(e)});
 
 document.addEventListener("keydown", (e)=>{tecla(e)});
 
+const imagen=new Image();
+imagen.src='assets/fondo';
+let fondoColor;
+var fondoGris=ctx.getImageData(0,0,10,10);
+imagen.onload=function(){
+    ctx.drawImage(imagen,0,0);
+    fondoGris=ctx.getImageData(0,0,1000,1000);
+    engrisar();
+    fondoColor=ctx.createPattern(imagen,'repeat');
+    for (i=0;i<10;i++){
+        const figuraTipo=Math.floor(Math.random()*2);
+        dibujarFiguraAleatoria(figuraTipo,i);
+    }
+    
+    
+}
+function engrisar(){
+    for (let i=0;i<fondoGris.width *fondoGris.height*4;i+=4){ 
+        const prom=(fondoGris.data[i]+fondoGris.data[i+1]+fondoGris.data[i+2])/3;
+        fondoGris.data[i]=prom;
+        fondoGris.data[i+1]=prom;
+        fondoGris.data[i+2]=prom;
+
+    }
+
+
+}
+
 const  figura=[];
 let modo='normal';
 function tecla(e){
-    // e.preventDefault();
     let x=0;y=0;
     switch (e.key){
         case 'ArrowUp':
@@ -24,13 +51,13 @@ function tecla(e){
             break;
         case 'ArrowRight':
             x+=10;
-    }
-    figura.forEach(f=>{
-        if (f.seleccionado) f.mover(x,y);
+        }
+        figura.forEach(f=>{
+            if (f.seleccionado) f.mover(x,y);
     })
     borrarPantalla();
     refresh();
-
+    
 }
 function clickete(e){
     if (!arrastrando){
@@ -60,16 +87,12 @@ function mouseCheck(e){
         arrastrando=true;
     }
 }
-function ratonFuera(){
-    if (obj) obj.seleccionar();
-}
-
-
 
 
 function borrarPantalla(){
     ctx.fillStyle='#ffffff';
     ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.putImageData(fondoGris,0,0);
     refresh();
 }
 
@@ -106,10 +129,6 @@ function dibujarFiguraAleatoria(tipo, indice){
 borrarPantalla();
 
 //crear 10 figuras aleatorias
-for (i=0;i<10;i++){
-    const figuraTipo=Math.floor(Math.random()*2);
-    dibujarFiguraAleatoria(figuraTipo,i);
-}
     
     
     

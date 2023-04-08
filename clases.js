@@ -1,9 +1,10 @@
+relleno="#500000";
 class Figura{
-    
     constructor(x,y,fill,ctx){
         this.x=x;
         this.y=y;
-        this.fill=fill;
+        // this.fill=fill;
+        this.fill=fondoColor;
         this.prevFill=fill;
         this.ctx=ctx;
         this.ctx.lineWidth=4;
@@ -16,7 +17,8 @@ class Figura{
     seleccionar(){
         if (!this.seleccionado){
             this.prevFill=this.fill;
-            this.fill="#500000";
+            this.fill=relleno;
+            // this.fill="#50000090";
             this.seleccionado=true;
         } else{
             this.fill=this.prevFill;
