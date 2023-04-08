@@ -3,7 +3,7 @@ const ctx=document.getElementById('canvas').getContext('2d');
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal'});
-canvas.addEventListener('dblclick',function(e){ dbClick(e)});
+canvas.addEventListener('click',function(e){ clickete(e)});
 
 document.addEventListener("keydown", (e)=>{tecla(e)});
 
@@ -33,7 +33,7 @@ function tecla(e){
     refresh();
 
 }
-function dbClick(e){
+function clickete(e){
     figura.forEach(f => {
         let obj=f.checkMouse(e.layerX,e.layerY)
         if (obj) {obj.seleccionar();refresh()}
