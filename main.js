@@ -1,5 +1,6 @@
 const canvas=document.getElementById('canvas');
 const ctx=document.getElementById('canvas').getContext('2d',{ willReadFrequently: true });
+
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal';}); 
@@ -7,21 +8,25 @@ canvas.addEventListener('click',function(e){ clickete(e)});
 
 document.addEventListener("keydown", (e)=>{tecla(e)});
 
-const imagen=new Image();
-imagen.src='assets/fondo';
+const  figura=[];
+let modo='normal'; //modo del mouse, normal o arrastrando
 let fondoColor;
 let fondoGris=ctx.getImageData(0,0,10,10);
-let relleno;
+let relleno; //gradiente para los seleccionados
+let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
+
+const imagen=new Image();
+imagen.src='assets/fondo';
 imagen.onload=function(){
     ctx.drawImage(imagen,0,0);
-    fondoGris=ctx.getImageData(0,0,1000,1000);
-    engrisar();
+    fondoGris=engrisar(ctx.getImageData(0,0,1000,1000));
     fondoColor=ctx.createPattern(imagen,'repeat');
     relleno=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
     relleno.addColorStop(0,'red');
     relleno.addColorStop(0.9,'blue');
     relleno.addColorStop(1,'green');
     
+    //dibujar 10 figuras aleatorias
     for (i=0;i<10;i++){
         const figuraTipo=Math.floor(Math.random()*2);
         dibujarFiguraAleatoria(figuraTipo,i);
@@ -29,20 +34,16 @@ imagen.onload=function(){
     
     
 }
-function engrisar(){
-    for (let i=0;i<fondoGris.width *fondoGris.height*4;i+=4){ 
-        const prom=(fondoGris.data[i]+fondoGris.data[i+1]+fondoGris.data[i+2])/3;
-        fondoGris.data[i]=prom;
-        fondoGris.data[i+1]=prom;
-        fondoGris.data[i+2]=prom;
-
+function engrisar(img){
+    for (let i=0;i<img.width *img.height*4;i+=4){ 
+        const prom=(img.data[i]+img.data[i+1]+img.data[i+2])/3;
+        img.data[i]=prom;
+        img.data[i+1]=prom;
+        img.data[i+2]=prom;
     }
-
-
+    return img;
 }
 
-const  figura=[];
-let modo='normal';
 function tecla(e){
     let x=0;y=0;
     switch (e.key){
@@ -65,6 +66,7 @@ function tecla(e){
     refresh();
     
 }
+
 function clickete(e){
     if (!arrastrando){
         figura.forEach(f => {
@@ -73,7 +75,7 @@ function clickete(e){
         });  
     }
 }
-let arrastrando=false;
+
 function mouseCheck(e){
     arrastrando=false;
     borrarPantalla();
@@ -112,10 +114,7 @@ function dibujarFiguraAleatoria(tipo, indice){
     const y=Math.floor(Math.random()*canvas.height-200);
     const ancho=Math.floor(Math.random()*100)+20;
     const alto=Math.floor(Math.random()*100)+20;
-    const colorR=Math.floor(Math.random()*200)+50;
-    const colorG=Math.floor(Math.random()*255);
-    const colorB=Math.floor(Math.random()*255);
-    const fill="#"+colorR.toString(16)+colorG.toString(16)+colorB.toString(16);
+    fill=null;
     switch (tipo){
         case 0:
             
