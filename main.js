@@ -6,8 +6,6 @@ canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal';}); 
 canvas.addEventListener('click',function(e){ clickete(e)});
 
-document.getElementById('menos').addEventListener('click',()=>{engrisar(fondoGris,-1);refresh()})
-document.getElementById('mas').addEventListener('click',()=>{engrisar(fondoGris,1)   ;refresh()})
 
 document.addEventListener("keydown", (e)=>{tecla(e)});
 
@@ -135,20 +133,52 @@ function dibujarFiguraAleatoria(tipo, indice){
     }
     
 borrarPantalla();
-///******** */ barra
-const canvasBarra=document.getElementById('barra');
-const ctxBarra=canvasBarra.getContext('2d');
-const barra=new Barra(ctxBarra,canvasBarra.width,canvas.height);
-canvasBarra.addEventListener('mousedown',(e)=>{barra.mouseDown=true});
-canvasBarra.addEventListener('mouseup',(e)=>{barra.mouseDown=false});
-canvasBarra.addEventListener('mousemove',(e)=>{barra.mover(e)});
+///******** */ barra roja
+const canvasBarraRoja=document.getElementById('barraRoja');
+const ctxBarraRoja=canvasBarraRoja.getContext('2d');
+const barraRoja=new Barra(ctxBarraRoja,canvasBarraRoja.width,canvasBarraRoja.height,'#ff0000',enrojar);
+canvasBarraRoja.addEventListener('mousedown',(e)=>{barraRoja.mouseDown=true});
+canvasBarraRoja.addEventListener('mouseup',(e)=>{barraRoja.mouseDown=false});
+canvasBarraRoja.addEventListener('mousemove',(e)=>{barraRoja.mover(e)});
 
-function enrojar(img,v){
-    console.log(v)
+function enrojar(v){
+    img=fondoGris;
     for (let i=0;i<img.width *img.height*4;i+=4){ 
         img.data[i]= v;
     }
     borrarPantalla();
     refresh();
     
+}
+///******** */ barra verde
+const canvasBarraVerde=document.getElementById('barraVerde');
+const ctxBarraVerde=canvasBarraVerde.getContext('2d');
+const barraVerde=new Barra(ctxBarraVerde,canvasBarraVerde.width,canvasBarraVerde.height,'#00ff00',enverdar);
+canvasBarraVerde.addEventListener('mousedown',(e)=>{barraVerde.mouseDown=true});
+canvasBarraVerde.addEventListener('mouseup',(e)=>{barraVerde.mouseDown=false});
+canvasBarraVerde.addEventListener('mousemove',(e)=>{barraVerde.mover(e)});
+
+function enverdar(v){
+    img=fondoGris;
+    for (let i=0;i<img.width *img.height*4;i+=4){ 
+        img.data[i+1]= v;
+    }
+    borrarPantalla();
+    refresh();
+}
+///******** */ barra Azul
+const canvasBarraAzul=document.getElementById('barraAzul');
+const ctxBarraAzul=canvasBarraAzul.getContext('2d');
+const barraAzul=new Barra(ctxBarraAzul,canvasBarraAzul.width,canvasBarraAzul.height,'#0000ff',enazular);
+canvasBarraAzul.addEventListener('mousedown',(e)=>{barraAzul.mouseDown=true});
+canvasBarraAzul.addEventListener('mouseup',(e)=>{barraAzul.mouseDown=false});
+canvasBarraAzul.addEventListener('mousemove',(e)=>{barraAzul.mover(e)});
+
+function enazular(v){
+    img=fondoGris;
+    for (let i=0;i<img.width *img.height*4;i+=4){ 
+        img.data[i+2]= v;
+    }
+    borrarPantalla();
+    refresh();
 }

@@ -91,34 +91,3 @@ class Rectangulo extends Figura{
     }
 
 }
-class Barra{
-    constructor(ctx, ancho,alto){
-        console.log('barra')
-        this.ctx=ctx
-        this.ancho=ancho;
-        this.alto=alto;
-        this.dibujar(ancho/2);
-    }
-    borrarme(){
-        this.ctx.fillStyle='#ffffff';
-        this.ctx.fillRect(0,0,this.ancho,this.alto);
-    }
-    dibujar(x){
-        this.borrarme();
-        this.ctx.fillStyle='#ff0000';
-        this.ctx.fillRect(10,3,this.ancho-10,7);
-        this.ctx.beginPath();
-        this.ctx.arc(x,5,10,0,2*Math.PI);
-        this.ctx.fill();
-        this.ctx.closePath();
-    }
-    mover(e){
-        if (this.mouseDown) {
-            this.dibujar(e.layerX);            
-            const calculo=Math.floor(e.layerX*255/this.ancho);
-            enrojar(fondoGris,calculo);
-            // console.log(e.layerX);
-            
-       }
-    }
-}
