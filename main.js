@@ -2,7 +2,7 @@ const canvas=document.getElementById('canvas');
 const ctx=document.getElementById('canvas').getContext('2d');
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
-canvas.addEventListener('mouseup',function(){modo='normal'});
+canvas.addEventListener('mouseup',function(){modo='normal';}); //if (obj) obj.seleccionar();
 canvas.addEventListener('click',function(e){ clickete(e)});
 
 document.addEventListener("keydown", (e)=>{tecla(e)});
@@ -10,8 +10,7 @@ document.addEventListener("keydown", (e)=>{tecla(e)});
 const  figura=[];
 let modo='normal';
 function tecla(e){
-    e.preventDefault();
-    console.log('ada')
+    // e.preventDefault();
     let x=0;y=0;
     switch (e.key){
         case 'ArrowUp':
@@ -34,28 +33,35 @@ function tecla(e){
 
 }
 function clickete(e){
-    figura.forEach(f => {
-        let obj=f.checkMouse(e.layerX,e.layerY)
-        if (obj) {obj.seleccionar();refresh()}
-    });  
+    if (!arrastrando){
+        figura.forEach(f => {
+            let obj=f.checkMouse(e.layerX,e.layerY)
+            if (obj) {obj.seleccionar();refresh()}
+        });  
+    }
 }
-let obj;
+let arrastrando=false;
 function mouseCheck(e){
+    arrastrando=false;
     borrarPantalla();
-    let marcada=false;
     if (modo=='normal'){
-        for (x=0;x<10 && !marcada;x++){
+        for (x=0;x<10 ;x++){
             obj=figura[x].checkMouse(e.layerX,e.layerY);
-            if (obj) {
-                marcada=true;
-                // obj.seleccionado=false;
-            }
+            if (obj) { return obj }
         }
     }
     else if (modo=='arrastrar'&& obj) {
-        // obj.marcar();
+        const Xoriginal=obj.x;
+        const Yoriginal=obj.y;
         obj.setCoords(e.layerX,e.layerY);
+        figura.forEach(f=>{
+            if (f.seleccionado) f.mover(e.movementX,e.movementY);
+        })
+        arrastrando=true;
     }
+}
+function ratonFuera(){
+    if (obj) obj.seleccionar();
 }
 
 

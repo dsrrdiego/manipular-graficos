@@ -16,7 +16,7 @@ class Figura{
     seleccionar(){
         if (!this.seleccionado){
             this.prevFill=this.fill;
-            this.fill="#FF0000";
+            this.fill="#500000";
             this.seleccionado=true;
         } else{
             this.fill=this.prevFill;
