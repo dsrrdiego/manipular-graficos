@@ -4,6 +4,7 @@ class Figura{
         this.x=x;
         this.y=y;
         this.fill=fill;
+        this.prevFill=fill;
         this.ctx=ctx;
         this.ctx.lineWidth=4;
         this.ctx.strokeStyle='red';
@@ -12,7 +13,21 @@ class Figura{
         this.ctx.fillStyle=this.fill;
     }
     // checkMouse(){}
-    
+    seleccionar(){
+        if (!this.seleccionado){
+            this.prevFill=this.fill;
+            this.fill="#FF0000";
+            this.seleccionado=true;
+        } else{
+            this.fill=this.prevFill;
+            this.seleccionado=false;
+
+        }
+    }    
+    mover(x,y){
+        this.x+=x;
+        this.y+=y;
+    }
     
 }
 class Circulo extends Figura{

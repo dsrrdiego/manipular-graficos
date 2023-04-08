@@ -3,12 +3,42 @@ const ctx=document.getElementById('canvas').getContext('2d');
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal'});
-document.addEventListener("keydown", (e)=>{console.log(e.key)},false);
+canvas.addEventListener('dblclick',function(e){ dbClick(e)});
+
+document.addEventListener("keydown", (e)=>{tecla(e)});
 
 const  figura=[];
 let modo='normal';
+function tecla(e){
+    e.preventDefault();
+    console.log('ada')
+    let x=0;y=0;
+    switch (e.key){
+        case 'ArrowUp':
+            y-=10;
+            break;
+        case 'ArrowDown':
+            y+=10;
+            break;
+        case 'ArrowLeft':
+            x-=10;
+            break;
+        case 'ArrowRight':
+            x+=10;
+    }
+    figura.forEach(f=>{
+        if (f.seleccionado) f.mover(x,y);
+    })
+    borrarPantalla();
+    refresh();
 
-
+}
+function dbClick(e){
+    figura.forEach(f => {
+        let obj=f.checkMouse(e.layerX,e.layerY)
+        if (obj) {obj.seleccionar();refresh()}
+    });  
+}
 let obj;
 function mouseCheck(e){
     borrarPantalla();
@@ -18,6 +48,7 @@ function mouseCheck(e){
             obj=figura[x].checkMouse(e.layerX,e.layerY);
             if (obj) {
                 marcada=true;
+                // obj.seleccionado=false;
             }
         }
     }
@@ -50,7 +81,6 @@ function dibujarFiguraAleatoria(tipo, indice){
     const colorG=Math.floor(Math.random()*255);
     const colorB=Math.floor(Math.random()*255);
     const fill="#"+colorR.toString(16)+colorG.toString(16)+colorB.toString(16);
-    // console.log(fill)
     switch (tipo){
         case 0:
             
