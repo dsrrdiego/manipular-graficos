@@ -9,8 +9,10 @@ canvasBarraRoja.addEventListener('mousemove',(e)=>{barraRoja.mover(e)});
 
 function enrojar(v){
     img=fondoGris;
+      
+    
     for (let i=0;i<img.width *img.height*4;i+=4){ 
-        img.data[i]= v;
+        img.data[i]+= v;
     }
     borrarPantalla();
     refresh();

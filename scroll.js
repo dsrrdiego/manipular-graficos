@@ -5,6 +5,7 @@ class Barra{
         this.alto=alto;
         this.fill=fill;
         this.funcion=funcion;
+        this.miPunto=0;
         this.dibujar(ancho/2);
     }
     borrarme(){
@@ -23,8 +24,11 @@ class Barra{
     mover(e){
         if (this.mouseDown) {
             this.dibujar(e.layerX);            
-            const calculo=Math.floor(e.layerX*255/this.ancho);
+            const calculo=Math.floor(e.layerX*255/this.ancho)-127;
+            console.log(calculo);
+            
             this.funcion(calculo);
+            // this.miPunto=calculo;
             
         }
     }

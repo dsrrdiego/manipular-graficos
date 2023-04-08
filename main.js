@@ -20,7 +20,7 @@ const imagen=new Image();
 imagen.src='assets/fondo';
 imagen.onload=function(){
     ctx.drawImage(imagen,0,0);
-    fondoGris=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height),0);
+    fondoGris=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height));
     fondoColor=ctx.createPattern(imagen,'repeat');
     relleno=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
     relleno.addColorStop(0,'red');
@@ -36,13 +36,12 @@ imagen.onload=function(){
     
 }
 let valor=0;
-function engrisar(img, v){
-    valor+=v;
+function engrisar(img){
     for (let i=0;i<img.width *img.height*4;i+=4){ 
         const prom=(img.data[i]+img.data[i+1]+img.data[i+2])/3;
-        img.data[i]=prom   + valor;
-        img.data[i+1]=prom + valor;
-        img.data[i+2]=prom + valor;
+        img.data[i]=prom;
+        img.data[i+1]=prom ;
+        img.data[i+2]=prom ;
     }
     return img;
 }
