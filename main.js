@@ -16,6 +16,8 @@ let fondoGrisOriginal=ctx.getImageData(0,0,10,10);
 let relleno; //gradiente para los seleccionados
 let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
 const oscuridad=20; //graduar la oscuridad del fondo
+const selectorRectangular=new SelectorRectangular(ctx);
+
 
 const imagen=new Image();
 imagen.src='assets/fondo';
@@ -30,7 +32,6 @@ imagen.onload=function(){
     fondoColor=ctx.createPattern(imagen,'repeat');
     relleno=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
     relleno.addColorStop(0,'red');
-    relleno.addColorStop(0.9,'blue');
     relleno.addColorStop(1,'green');
     
     //dibujar 10 figuras aleatorias
@@ -105,9 +106,9 @@ function mouseCheck(e){
     }
     else if (modo=='selectorRectangular'){
         selectorRectangular.setFin(e.layerX,e.layerY);
+        selectorRectangular.check(figura);
     }
 }
-selectorRectangular=new SelectorRectangular(ctx);
 function mouseDown(e){
     if (mouseCheck(e)){ modo='arrastrar';}
     else{
@@ -156,4 +157,4 @@ borrarPantalla();
 
 /*******instrucciones */
 document.getElementById('instrucciones').addEventListener('click',()=>{
-    alert('Clickee de a uno para hacer seleccion multiple, y utilice el mouse o las flechas para mover')});
+    alert('Clickee de a uno para hacer seleccion multiple o dibuje un rectangulo con el mouse. \n Utilice el mouse o las flechas para mover')});

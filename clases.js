@@ -5,7 +5,7 @@ class Figura{
         this.y=y;
         this.fill=fondoColor;
         this.ctx=ctx;
-        this.ctx.lineWidth=4;
+        this.ctx.lineWidth=1;
         this.ctx.strokeStyle='red';
     }
     dibujar(){
@@ -25,6 +25,7 @@ class Figura{
         this.x+=x;
         this.y+=y;
     }
+    
 }
 
 class Circulo extends Figura{
@@ -59,6 +60,29 @@ class Circulo extends Figura{
         this.x=x;
         this.y=y;
     }
+    chequearCon(x,y,w,h){
+
+        if (x>x+w) {
+            x=x+w;
+            w*=-1;
+        }
+        if (y>y+h){
+            y=y+h;
+            h*=-1;
+        }
+
+
+
+        if (x < this.x-this.radio && x+w> this.x+this.radio
+            && y<this.y-this.radio && y+h> this.y+this.radio) {
+                if (!this.seleccionado) this.seleccionar();
+                this.marcar();
+            }
+            
+
+
+    }
+
 }
 
 class Rectangulo extends Figura{
@@ -89,30 +113,30 @@ class Rectangulo extends Figura{
         this.y=y-this.alto/2;
 
     }
+    
+    
+    chequearCon(x,y,w,h){
+
+        if (x>x+w) {
+            x=x+w;
+            w*=-1;
+        }
+        if (y>y+h){
+            y=y+h;
+            h*=-1;
+        }
+
+
+
+        if (x < this.x && x+w> this.x+this.ancho
+            && y<this.y && y+h> this.y+this.alto) {
+                if (!this.seleccionado) this.seleccionar();
+                this.marcar();
+            }
+            
+
+
+    }
 
 }
 
-
-class SelectorRectangular{
-    constructor(ctx){
-        this.ctx=ctx;
-        this.activo=false;
-        this.width=0;
-        this.height=0;
-    }
-    setCoords(x,y){
-        this.x=x;
-        this.y=y;
-        this.activo=true;
-    }
-    setFin(x,y){
-        this.width=x-this.x;
-        this.height=y-this.y;
-
-    }
-    dibujar(){
-        this.ctx.fillRect(this.x,this.y,this.width,this.height);
-
-
-    }
-}
