@@ -1,4 +1,6 @@
-relleno="#500000";
+// relleno="#500000";
+
+
 class Figura{
     constructor(x,y,fill,ctx){
         this.x=x;

@@ -1,5 +1,5 @@
 const canvas=document.getElementById('canvas');
-const ctx=document.getElementById('canvas').getContext('2d');
+const ctx=document.getElementById('canvas').getContext('2d',{ willReadFrequently: true });
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
 canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal';}); 
@@ -10,12 +10,18 @@ document.addEventListener("keydown", (e)=>{tecla(e)});
 const imagen=new Image();
 imagen.src='assets/fondo';
 let fondoColor;
-var fondoGris=ctx.getImageData(0,0,10,10);
+let fondoGris=ctx.getImageData(0,0,10,10);
+let relleno;
 imagen.onload=function(){
     ctx.drawImage(imagen,0,0);
     fondoGris=ctx.getImageData(0,0,1000,1000);
     engrisar();
     fondoColor=ctx.createPattern(imagen,'repeat');
+    relleno=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
+    relleno.addColorStop(0,'red');
+    relleno.addColorStop(0.9,'blue');
+    relleno.addColorStop(1,'green');
+    
     for (i=0;i<10;i++){
         const figuraTipo=Math.floor(Math.random()*2);
         dibujarFiguraAleatoria(figuraTipo,i);
