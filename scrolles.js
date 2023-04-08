@@ -9,7 +9,8 @@ canvasBarraRoja.addEventListener('mousemove',(e)=>{barraRoja.mover(e)});
 
 function enrojar(v){
     img=fondoGris;
-      
+    copiar(fondoGrisOriginal,img);
+    
     
     for (let i=0;i<img.width *img.height*4;i+=4){ 
         img.data[i]+= v;
@@ -28,11 +29,15 @@ canvasBarraVerde.addEventListener('mousemove',(e)=>{barraVerde.mover(e)});
 
 function enverdar(v){
     img=fondoGris;
+    copiar(fondoGrisOriginal,img);
+
+
     for (let i=0;i<img.width *img.height*4;i+=4){ 
-        img.data[i+1]= v;
+        img.data[i+1]+= v;
     }
     borrarPantalla();
     refresh();
+    
 }
 ///******** */ barra Azul
 const canvasBarraAzul=document.getElementById('barraAzul');
@@ -43,10 +48,19 @@ canvasBarraAzul.addEventListener('mouseup',(e)=>{barraAzul.mouseDown=false});
 canvasBarraAzul.addEventListener('mousemove',(e)=>{barraAzul.mover(e)});
 
 function enazular(v){
+
     img=fondoGris;
+    copiar(fondoGrisOriginal,img);
+
     for (let i=0;i<img.width *img.height*4;i+=4){ 
-        img.data[i+2]= v;
+        img.data[i+2]+= v;
     }
     borrarPantalla();
     refresh();
+}
+/***** */
+function copiar(origen,destino){
+    for (let i=0;i<origen.width *origen.height*4;i+=4){ 
+        destino.data[i]= origen.data[i];
+    }
 }

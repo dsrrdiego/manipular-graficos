@@ -13,14 +13,21 @@ const  figura=[];
 let modo='normal'; //modo del mouse, normal o arrastrando
 let fondoColor;
 let fondoGris=ctx.getImageData(0,0,10,10);
+let fondoGrisOriginal=ctx.getImageData(0,0,10,10);
 let relleno; //gradiente para los seleccionados
 let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
+const oscuridad=20; //graduar la oscuridad del fondo
 
 const imagen=new Image();
 imagen.src='assets/fondo';
 imagen.onload=function(){
     ctx.drawImage(imagen,0,0);
     fondoGris=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height));
+    borrarPantalla();
+    refresh();
+    fondoGrisOriginal=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height));
+    borrarPantalla();
+    refresh();
     fondoColor=ctx.createPattern(imagen,'repeat');
     relleno=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
     relleno.addColorStop(0,'red');
@@ -35,13 +42,12 @@ imagen.onload=function(){
     
     
 }
-let valor=0;
 function engrisar(img){
     for (let i=0;i<img.width *img.height*4;i+=4){ 
         const prom=(img.data[i]+img.data[i+1]+img.data[i+2])/3;
-        img.data[i]=prom;
-        img.data[i+1]=prom ;
-        img.data[i+2]=prom ;
+        img.data[i]=prom   -oscuridad;
+        img.data[i+1]=prom -oscuridad;
+        img.data[i+2]=prom -oscuridad;
     }
     return img;
 }
@@ -133,3 +139,7 @@ function dibujarFiguraAleatoria(tipo, indice){
     
 borrarPantalla();
 
+
+/*******instrucciones */
+document.getElementById('instrucciones').addEventListener('click',()=>{
+    alert('Clickee de a uno para hacer seleccion multiple, y utilice el mouse o las flechas para mover')});
