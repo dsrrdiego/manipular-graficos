@@ -2,14 +2,14 @@ const canvas=document.getElementById('canvas');
 const ctx=document.getElementById('canvas').getContext('2d',{ willReadFrequently: true });
 
 canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
-canvas.addEventListener('mousedown',function(){modo='arrastrar'});
-canvas.addEventListener('mouseup',function(){modo='normal';}); 
+canvas.addEventListener('mousedown',function(e){mouseDown(e);})
+canvas.addEventListener('mouseup',function(){modo='normal',selectorRectangular.activo=false;borrarPantalla(),refresh()}); 
 canvas.addEventListener('click',function(e){ clickete(e)});
 
 document.addEventListener("keydown", (e)=>{tecla(e)});
 
 const  figura=[];
-let modo='normal'; //modo del mouse, normal o arrastrando
+let modo='normal'; //modo del mouse, normal , arrastrando o selectorRectangular
 let fondoColor;
 let fondoGris=ctx.getImageData(0,0,10,10);
 let fondoGrisOriginal=ctx.getImageData(0,0,10,10);
@@ -103,6 +103,18 @@ function mouseCheck(e){
         })
         arrastrando=true;
     }
+    else if (modo=='selectorRectangular'){
+        selectorRectangular.setFin(e.layerX,e.layerY);
+    }
+}
+selectorRectangular=new SelectorRectangular(ctx);
+function mouseDown(e){
+    if (mouseCheck(e)){ modo='arrastrar';}
+    else{
+        modo='selectorRectangular'
+        selectorRectangular.setCoords(e.layerX,e.layerY);
+    }
+
 }
 
 
@@ -115,6 +127,7 @@ function borrarPantalla(){
 
 function refresh(){
     figura.forEach(f =>f.dibujar());
+    if (selectorRectangular.activo) selectorRectangular.dibujar();
 }
 
 
