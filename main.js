@@ -6,6 +6,9 @@ canvas.addEventListener('mousedown',function(){modo='arrastrar'});
 canvas.addEventListener('mouseup',function(){modo='normal';}); 
 canvas.addEventListener('click',function(e){ clickete(e)});
 
+document.getElementById('menos').addEventListener('click',()=>{engrisar(fondoGris,-1);refresh()})
+document.getElementById('mas').addEventListener('click',()=>{engrisar(fondoGris,1)   ;refresh()})
+
 document.addEventListener("keydown", (e)=>{tecla(e)});
 
 const  figura=[];
@@ -19,7 +22,7 @@ const imagen=new Image();
 imagen.src='assets/fondo';
 imagen.onload=function(){
     ctx.drawImage(imagen,0,0);
-    fondoGris=engrisar(ctx.getImageData(0,0,1000,1000));
+    fondoGris=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height),0);
     fondoColor=ctx.createPattern(imagen,'repeat');
     relleno=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
     relleno.addColorStop(0,'red');
@@ -34,12 +37,14 @@ imagen.onload=function(){
     
     
 }
-function engrisar(img){
+let valor=0;
+function engrisar(img, v){
+    valor+=v;
     for (let i=0;i<img.width *img.height*4;i+=4){ 
         const prom=(img.data[i]+img.data[i+1]+img.data[i+2])/3;
-        img.data[i]=prom;
-        img.data[i+1]=prom;
-        img.data[i+2]=prom;
+        img.data[i]=prom   + valor;
+        img.data[i+1]=prom + valor;
+        img.data[i+2]=prom + valor;
     }
     return img;
 }
@@ -130,3 +135,20 @@ function dibujarFiguraAleatoria(tipo, indice){
     }
     
 borrarPantalla();
+///******** */ barra
+const canvasBarra=document.getElementById('barra');
+const ctxBarra=canvasBarra.getContext('2d');
+const barra=new Barra(ctxBarra,canvasBarra.width,canvas.height);
+canvasBarra.addEventListener('mousedown',(e)=>{barra.mouseDown=true});
+canvasBarra.addEventListener('mouseup',(e)=>{barra.mouseDown=false});
+canvasBarra.addEventListener('mousemove',(e)=>{barra.mover(e)});
+
+function enrojar(img,v){
+    console.log(v)
+    for (let i=0;i<img.width *img.height*4;i+=4){ 
+        img.data[i]= v;
+    }
+    borrarPantalla();
+    refresh();
+    
+}
