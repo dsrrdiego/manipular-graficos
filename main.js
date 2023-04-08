@@ -157,4 +157,4 @@ borrarPantalla();
 
 /*******instrucciones */
 document.getElementById('instrucciones').addEventListener('click',()=>{
-    alert('Clickee de a uno para hacer seleccion multiple o dibuje un rectangulo con el mouse. \n Utilice el mouse o las flechas para mover')});
+    alert('* Arrastre las figuras para ver los colores de fondo. \n *Clickee de a uno para hacer seleccion multiple o dibuje un rectangulo con el mouse. \n *Utilice el mouse o las flechas para mover. \n *Aplique filtros de colores.')});
