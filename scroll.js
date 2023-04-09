@@ -27,7 +27,6 @@ class Barra{
         if (this.mouseDown) {
             this.dibujar(e.layerX);            
             const calculo=Math.floor(e.layerX*255/this.ancho)-127;
-            
             this.funcion(calculo,this.indice);
         }
     }

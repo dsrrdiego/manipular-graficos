@@ -1,3 +1,4 @@
+'use strict';
 const canvas=document.getElementById('canvas');
 const ctx=document.getElementById('canvas').getContext('2d',{ willReadFrequently: true });
 
@@ -13,7 +14,8 @@ let modo='normal'; //modo del mouse, normal , arrastrando o selectorRectangular
 let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
 const oscuridad=0; //graduar la oscuridad del fondo
 const selectorRectangular=new SelectorRectangular(ctx);
-
+let fondoGris;
+let fondoGrisOriginal;
 
 /*inicio*/
 const imagen=new Image();
@@ -26,13 +28,13 @@ imagen.onload=function(){
     fondoGrisOriginal=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height));
     borrarPantalla();
     refresh();
-    fondoColor=ctx.createPattern(imagen,'repeat');
-    sombra=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
+    const fondoColor=ctx.createPattern(imagen,'repeat');
+    const sombra=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
     sombra.addColorStop(0,'red');
     sombra.addColorStop(1,'green');
     
     //dibujar 10 figuras aleatorias
-    for (i=0;i<10;i++){
+    for (let i=0;i<10;i++){
         const figuraTipo=Math.floor(Math.random()*2);
         dibujarFiguraAleatoria(figuraTipo,i,fondoColor,sombra);
     }
@@ -67,18 +69,21 @@ function mouseMove(e){
 
 function mouseCheck(e){
     for (let i=0;i<10;i++){
-        fig=figura[i].mouseCheck(e.layerX-12,e.layerY-12);
+        const fig=figura[i].mouseCheck(e.layerX-12,e.layerY-12);
         if (fig) return fig;
     }
 }
 
 function clickete(e){
+    let bandera=null;
     if (!arrastrando){
         figura.forEach(f => {
-            let fig=f.mouseCheck(e.layerX,e.layerY)
-            if (fig) {fig.seleccionar();}
+            if (f.mouseCheck(e.layerX,e.layerY)){
+                f.seleccionar();
+                bandera=true;
+            }
         });
-        if (!fig) desSelecionarTodo();  
+        if (!bandera) desSelecionarTodo();  
     }
 }
 
@@ -93,7 +98,8 @@ function mouseDown(e){
 
 
 function tecla(e){
-    let x=0;y=0;
+    let x=0;
+    let y=0;
     switch (e.key){
         case 'ArrowUp':
             y-=10;

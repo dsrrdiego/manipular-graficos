@@ -13,7 +13,7 @@ class Figura{
     }
     dibujar(){
         if (this.sombrear){ 
-            this.ctx.fillStyle=sombra;
+            this.ctx.fillStyle=this.sombra;
         }else{
             this.ctx.fillStyle=this.fill;
         }
