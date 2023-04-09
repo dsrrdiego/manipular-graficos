@@ -21,6 +21,7 @@ let fondoGrisOriginal;
 const imagen=new Image();
 imagen.src='fondo';
 imagen.onload=function(){
+    imagen.crossOrigin = "Anonymous";
     ctx.drawImage(imagen,0,0);
     fondoGris=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height));
     borrarPantalla();
