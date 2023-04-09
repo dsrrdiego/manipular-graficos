@@ -62,27 +62,11 @@ class Circulo extends Figura{
             return false;
         }
     }
-    chequearCon(x,y,w,h){
-
-        if (x>x+w) {
-            x=x+w;
-            w*=-1;
-        }
-        if (y>y+h){
-            y=y+h;
-            h*=-1;
-        }
-
-
-
+    chequearCon(x,y,w,h){ //si entra en el selector multiple
         if (x < this.x-this.radio && x+w> this.x+this.radio
             && y<this.y-this.radio && y+h> this.y+this.radio) {
-                // if (!this.seleccionado) this.seleccionar();
-                // this.marcar();
+                if (!this.seleccionado) this.seleccionar();
             }
-            
-
-
     }
 
 }
@@ -101,9 +85,6 @@ class Rectangulo extends Figura{
         }
     }
 
-    marcar(){
-    }
-
     mouseCheck(x,y){
         if (x>this.x && x < this.x+this.ancho
             && y>this.y && y<this.y+this.alto) {
@@ -112,23 +93,12 @@ class Rectangulo extends Figura{
 
     }
     
-    chequearCon(x,y,w,h){
-
-        if (x>x+w) {
-            x=x+w;
-            w*=-1;
-        }
-        if (y>y+h){
-            y=y+h;
-            h*=-1;
-        }
-
+    chequearCon(x,y,w,h){ //si entra en el selector multiple
 
 
         if (x < this.x && x+w> this.x+this.ancho
             && y<this.y && y+h> this.y+this.alto) {
                 if (!this.seleccionado) this.seleccionar();
-                this.marcar();
             }
             
 

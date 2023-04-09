@@ -10,18 +10,12 @@ document.addEventListener("keydown", (e)=>{nucleo(tecla,e)});
 
 const  figura=[];
 let modo='normal'; //modo del mouse, normal , arrastrando o selectorRectangular
-let fondoGris=ctx.getImageData(0,0,10,10);
-let fondoGrisOriginal=ctx.getImageData(0,0,10,10);
 let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
 const oscuridad=20; //graduar la oscuridad del fondo
 const selectorRectangular=new SelectorRectangular(ctx);
 
-function nucleo(funcion,e){
-    borrarPantalla();
-    funcion(e);
-    refresh();
-}
 
+/*inicio*/
 const imagen=new Image();
 imagen.src='assets/fondo';
 imagen.onload=function(){
@@ -44,18 +38,59 @@ imagen.onload=function(){
     }
     borrarPantalla();
     refresh();
-    
-    
 }
-function engrisar(img){
-    for (let i=0;i<img.width *img.height*4;i+=4){ 
-        const prom=(img.data[i]+img.data[i+1]+img.data[i+2])/3;
-        img.data[i]=prom   -oscuridad;
-        img.data[i+1]=prom -oscuridad;
-        img.data[i+2]=prom -oscuridad;
+
+//** sector mouse y teclado*/
+function mouseMove(e){
+    arrastrando=false;
+    const fig=mouseCheck(e);
+    switch (modo){
+        case 'normal':
+            if (fig) fig.sombrear=true;
+            break;
+
+        case 'arrastrar':
+            figura.forEach(f=>{
+                if (f.seleccionado) f.mover(e.movementX,e.movementY);
+            })
+            arrastrando=true;
+            if (fig) fig.mover(e.movementX,e.movementY);
+            break;
+            
+        case 'selectorRectangular':
+            arrastrando=true;
+            selectorRectangular.setFin(e.layerX,e.layerY);
+            selectorRectangular.check(figura,e.ctrlKey);
+            break;
     }
-    return img;
 }
+
+function mouseCheck(e){
+    for (let i=0;i<10;i++){
+        fig=figura[i].mouseCheck(e.layerX-12,e.layerY-12);
+        if (fig) return fig;
+    }
+}
+
+function clickete(e){
+    if (!arrastrando){
+        figura.forEach(f => {
+            let fig=f.mouseCheck(e.layerX,e.layerY)
+            if (fig) {fig.seleccionar();}
+        });
+        if (!fig) desSelecionarTodo();  
+    }
+}
+
+
+function mouseDown(e){
+    if (mouseCheck(e)){ modo='arrastrar';}
+    else{
+        modo='selectorRectangular'
+        selectorRectangular.setCoords(e.layerX,e.layerY);
+    }
+}
+
 
 function tecla(e){
     let x=0;y=0;
@@ -69,7 +104,7 @@ function tecla(e){
         case 'ArrowLeft':
             x-=10;
             break;
-        case 'ArrowRight':
+            case 'ArrowRight':
             x+=10;
         }
         figura.forEach(f=>{
@@ -77,94 +112,34 @@ function tecla(e){
     })
     
 }
-//** sector mouse */
-function mouseMove(e){
-    // borrarPantalla();
-    arrastrando=false;
-    const fig=mouseCheck(e);
-    switch (modo){
-        
-        case 'normal':
-            if (fig) fig.sombrear=true;
-            break;
-        case 'arrastrar':
-            figura.forEach(f=>{
-                if (f.seleccionado) f.mover(e.movementX,e.movementY);
-            })
-            arrastrando=true;
-            if (fig){
-                fig.mover(e.movementX,e.movementY);
-            }
-            
-            break;
-            
-        case 'selectorRectangular':
-            selectorRectangular.setFin(e.layerX,e.layerY);
-            selectorRectangular.check(figura);
-            break;
-        }
-    }
+/* fin sector mouse y teclado*/
 
-function mouseCheck(e){
-    for (let i=0;i<10;i++){
-        fig=figura[i].mouseCheck(e.layerX-12,e.layerY-12);
-        if (fig) return fig;
-}
-}
-function clickete(e){
-    if (!arrastrando){
-        figura.forEach(f => {
-            let fig=f.mouseCheck(e.layerX,e.layerY)
-            if (fig) {fig.seleccionar();}
-        });
-        if (!fig) desSelecionarTodo();  
+
+function engrisar(img){
+    for (let i=0;i<img.width *img.height*4;i+=4){ 
+        const prom=(img.data[i]+img.data[i+1]+img.data[i+2])/3;
+        img.data[i]=prom   -oscuridad;
+        img.data[i+1]=prom -oscuridad;
+        img.data[i+2]=prom -oscuridad;
     }
+    return img;
+}
+
+function nucleo(funcion,e){
+    borrarPantalla();
+    funcion(e);
+    refresh();
 }
 
 function desSelecionarTodo(){
     figura.forEach(f=>{f.seleccionado=false});
 }
 
-// function mouseCheck(e){
-//     arrastrando=false;
-//     borrarPantalla();
-//     if (modo=='normal'){
-//         for (x=0;x<10 ;x++){
-//             obj=figura[x].checkMouse(e.layerX,e.layerY);
-//             if (obj) { return obj }
-//         }
-//     }
-//     else if (modo=='arrastrar'&& obj) {
-//         const Xoriginal=obj.x;
-//         const Yoriginal=obj.y;
-//         obj.setCoords(e.layerX,e.layerY);
-//         figura.forEach(f=>{
-//             if (f.seleccionado) f.mover(e.movementX,e.movementY);
-//         })
-//         arrastrando=true;
-//     }
-//     else if (modo=='selectorRectangular'){
-//         selectorRectangular.setFin(e.layerX,e.layerY);
-//         selectorRectangular.check(figura);
-//     }
-// }
-function mouseDown(e){
-    if (mouseCheck(e)){ modo='arrastrar';}
-    else{
-        modo='selectorRectangular'
-        selectorRectangular.setCoords(e.layerX,e.layerY);
-    }
-
-}
-
-/* fin sector mouse*/
-
 function borrarPantalla(){
     ctx.fillStyle='#ffffff';
     ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.putImageData(fondoGris,0,0);
     figura.forEach(f=>{f.sombrear=false;})
-    
 }
 
 function refresh(){
@@ -174,11 +149,11 @@ function refresh(){
 
 
 function dibujarFiguraAleatoria(tipo, indice,fondo,sombra){
-    const x=Math.floor(Math.random()*canvas.width-200);
-    const y=Math.floor(Math.random()*canvas.height-200);
     const ancho=Math.floor(Math.random()*100)+20;
     const alto=Math.floor(Math.random()*100)+20;
-
+    const x=Math.floor(Math.random()*canvas.width-ancho*2)+ancho;
+    const y=Math.floor(Math.random()*canvas.height-alto*2)+alto;
+    
     switch (tipo){
         case 0:
             figura[indice]=new Rectangulo(x,y,ancho,alto,fondo,sombra,ctx);
@@ -192,9 +167,7 @@ function dibujarFiguraAleatoria(tipo, indice,fondo,sombra){
 
     }
     
-borrarPantalla();
-
 
 /*******instrucciones */
 document.getElementById('instrucciones').addEventListener('click',()=>{
-    alert('* Arrastre las figuras para ver los colores de fondo. \n *Clickee de a uno para hacer seleccion multiple o dibuje un rectangulo con el mouse. \n *Utilice el mouse o las flechas para mover. \n *Aplique filtros de colores.')});
+    alert('* Arrastre las figuras para ver los colores de fondo. \n *Clickee de a uno para hacer seleccion multiple o dibuje un rectangulo con el mouse. \n *Tecla control para incluir otro rectángulo. \n *Utilice el mouse o las flechas para mover. \n *Aplique filtros de colores.')});
