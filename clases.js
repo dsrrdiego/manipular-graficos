@@ -1,11 +1,12 @@
 
 class Figura{
-    constructor(x,y,ctx){
+    constructor(x,y,fondo,sombra,ctx){
         this.x=x;
         this.y=y;
-        this.fill=fondoColor;
+        this.fill=fondo;
+        this.sombra=sombra;
         this.ctx=ctx;
-        this.ctx.lineWidth=1;
+        this.ctx.lineWidth=2;
         this.ctx.strokeStyle='red';
     }
     dibujar(){
@@ -29,8 +30,8 @@ class Figura{
 }
 
 class Circulo extends Figura{
-    constructor(x,y,radio,ctx){
-        super (x,y,ctx);
+    constructor(x,y,radio,fondo,sombra,ctx){
+        super (x,y,fondo,sombra,ctx);
         this.radio=radio;
     }
     dibujar(){
@@ -86,8 +87,8 @@ class Circulo extends Figura{
 }
 
 class Rectangulo extends Figura{
-    constructor(x,y,ancho,alto,ctx){
-        super (x,y,ctx);
+    constructor(x,y,ancho,alto,fondo,sombra,ctx){
+        super (x,y,fondo,sombra,ctx);
         this.ancho=ancho;
         this.alto=alto;
     }

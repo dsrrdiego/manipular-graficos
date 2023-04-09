@@ -10,10 +10,8 @@ document.addEventListener("keydown", (e)=>{tecla(e)});
 
 const  figura=[];
 let modo='normal'; //modo del mouse, normal , arrastrando o selectorRectangular
-let fondoColor;
 let fondoGris=ctx.getImageData(0,0,10,10);
 let fondoGrisOriginal=ctx.getImageData(0,0,10,10);
-let relleno; //gradiente para los seleccionados
 let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
 const oscuridad=20; //graduar la oscuridad del fondo
 const selectorRectangular=new SelectorRectangular(ctx);
@@ -30,14 +28,14 @@ imagen.onload=function(){
     borrarPantalla();
     refresh();
     fondoColor=ctx.createPattern(imagen,'repeat');
-    relleno=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
-    relleno.addColorStop(0,'red');
-    relleno.addColorStop(1,'green');
+    sombra=ctx.createLinearGradient(0,00,canvas.width,canvas.height);
+    sombra.addColorStop(0,'red');
+    sombra.addColorStop(1,'green');
     
     //dibujar 10 figuras aleatorias
     for (i=0;i<10;i++){
         const figuraTipo=Math.floor(Math.random()*2);
-        dibujarFiguraAleatoria(figuraTipo,i);
+        dibujarFiguraAleatoria(figuraTipo,i,fondoColor,sombra);
     }
     borrarPantalla();
     refresh();
@@ -132,7 +130,7 @@ function refresh(){
 }
 
 
-function dibujarFiguraAleatoria(tipo, indice){
+function dibujarFiguraAleatoria(tipo, indice,fondo,sombra){
     const x=Math.floor(Math.random()*canvas.width-200);
     const y=Math.floor(Math.random()*canvas.height-200);
     const ancho=Math.floor(Math.random()*100)+20;
@@ -140,14 +138,13 @@ function dibujarFiguraAleatoria(tipo, indice){
 
     switch (tipo){
         case 0:
-            
-            figura[indice]=new Rectangulo(x,y,ancho,alto,ctx);
+            figura[indice]=new Rectangulo(x,y,ancho,alto,fondo,sombra,ctx);
             break;
-            case 1:
-                figura[indice]=new Circulo(x,y,ancho,ctx);
-                break;
-            //figura 2,
-            //figura 3,
+        case 1:
+            figura[indice]=new Circulo(x,y,ancho,fondo,sombra,ctx);
+            break;
+        //figura 2,
+        //figura 3,
         }
 
     }
