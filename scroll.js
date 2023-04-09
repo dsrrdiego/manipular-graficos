@@ -1,11 +1,13 @@
 class Barra{
-    constructor(ctx, ancho,alto,fill,funcion){
+    constructor(ctx, ancho,alto,fill,funcion,indice){
         this.ctx=ctx
         this.ancho=ancho;
         this.alto=alto;
-        this.fill=fill;
+        this.fill=ctx.createLinearGradient(0,0,ancho,10);
+        this.fill.addColorStop(0,'black');
+        this.fill.addColorStop(1,fill);
         this.funcion=funcion;
-        this.miPunto=0;
+        this.indice=indice;
         this.dibujar(ancho/2);
     }
     borrarme(){
@@ -26,7 +28,7 @@ class Barra{
             this.dibujar(e.layerX);            
             const calculo=Math.floor(e.layerX*255/this.ancho)-127;
             
-            this.funcion(calculo);
+            this.funcion(calculo,this.indice);
         }
     }
 }
