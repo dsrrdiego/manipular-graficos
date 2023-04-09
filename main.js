@@ -11,13 +11,13 @@ document.addEventListener("keydown", (e)=>{nucleo(tecla,e)});
 const  figura=[];
 let modo='normal'; //modo del mouse, normal , arrastrando o selectorRectangular
 let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
-const oscuridad=20; //graduar la oscuridad del fondo
+const oscuridad=0; //graduar la oscuridad del fondo
 const selectorRectangular=new SelectorRectangular(ctx);
 
 
 /*inicio*/
 const imagen=new Image();
-imagen.src='assets/fondo';
+imagen.src='fondo';
 imagen.onload=function(){
     ctx.drawImage(imagen,0,0);
     fondoGris=engrisar(ctx.getImageData(0,0,canvas.width,canvas.height));

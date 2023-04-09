@@ -30,8 +30,9 @@ function copiar(origen,destino){
     for (let i=0;i<origen.width *origen.height*4;i+=4){ 
         destino.data[i]= origen.data[i];
     }
-}
     
+}
+
 function filtrar(v,color){
     img=fondoGris;
     copiar(fondoGrisOriginal,img);
