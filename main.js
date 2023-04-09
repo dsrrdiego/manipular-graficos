@@ -1,12 +1,12 @@
 const canvas=document.getElementById('canvas');
 const ctx=document.getElementById('canvas').getContext('2d',{ willReadFrequently: true });
 
-canvas.addEventListener('mousemove',function(e){mouseCheck(e)});
-canvas.addEventListener('mousedown',function(e){mouseDown(e);})
-canvas.addEventListener('mouseup',function(){modo='normal',selectorRectangular.activo=false;borrarPantalla(),refresh()}); 
-canvas.addEventListener('click',function(e){ clickete(e)});
+canvas.addEventListener('mousemove',function(e){nucleo(mouseMove,e)});
+canvas.addEventListener('mousedown',function(e){nucleo(mouseDown,e);})
+canvas.addEventListener('mouseup',function(){modo='normal',selectorRectangular.activo=false}); 
+canvas.addEventListener('click',function(e){ nucleo(clickete,e)});
 
-document.addEventListener("keydown", (e)=>{tecla(e)});
+document.addEventListener("keydown", (e)=>{nucleo(tecla,e)});
 
 const  figura=[];
 let modo='normal'; //modo del mouse, normal , arrastrando o selectorRectangular
@@ -16,6 +16,11 @@ let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
 const oscuridad=20; //graduar la oscuridad del fondo
 const selectorRectangular=new SelectorRectangular(ctx);
 
+function nucleo(funcion,e){
+    borrarPantalla();
+    funcion(e);
+    refresh();
+}
 
 const imagen=new Image();
 imagen.src='assets/fondo';
@@ -70,43 +75,79 @@ function tecla(e){
         figura.forEach(f=>{
             if (f.seleccionado) f.mover(x,y);
     })
-    borrarPantalla();
-    refresh();
     
 }
+//** sector mouse */
+function mouseMove(e){
+    // borrarPantalla();
+    arrastrando=false;
+    const fig=mouseCheck(e);
+    switch (modo){
+        
+        case 'normal':
+            if (fig) fig.sombrear=true;
+            break;
+        case 'arrastrar':
+            figura.forEach(f=>{
+                if (f.seleccionado) f.mover(e.movementX,e.movementY);
+            })
+            arrastrando=true;
+            if (fig){
+                fig.mover(e.movementX,e.movementY);
+            }
+            
+            break;
+            
+        case 'selectorRectangular':
+            selectorRectangular.setFin(e.layerX,e.layerY);
+            selectorRectangular.check(figura);
+            break;
+        }
+    }
 
+function mouseCheck(e){
+    for (let i=0;i<10;i++){
+        fig=figura[i].mouseCheck(e.layerX-12,e.layerY-12);
+        if (fig) return fig;
+}
+}
 function clickete(e){
     if (!arrastrando){
         figura.forEach(f => {
-            let obj=f.checkMouse(e.layerX,e.layerY)
-            if (obj) {obj.seleccionar();refresh()}
-        });  
+            let fig=f.mouseCheck(e.layerX,e.layerY)
+            if (fig) {fig.seleccionar();}
+        });
+        if (!fig) desSelecionarTodo();  
     }
 }
 
-function mouseCheck(e){
-    arrastrando=false;
-    borrarPantalla();
-    if (modo=='normal'){
-        for (x=0;x<10 ;x++){
-            obj=figura[x].checkMouse(e.layerX,e.layerY);
-            if (obj) { return obj }
-        }
-    }
-    else if (modo=='arrastrar'&& obj) {
-        const Xoriginal=obj.x;
-        const Yoriginal=obj.y;
-        obj.setCoords(e.layerX,e.layerY);
-        figura.forEach(f=>{
-            if (f.seleccionado) f.mover(e.movementX,e.movementY);
-        })
-        arrastrando=true;
-    }
-    else if (modo=='selectorRectangular'){
-        selectorRectangular.setFin(e.layerX,e.layerY);
-        selectorRectangular.check(figura);
-    }
+function desSelecionarTodo(){
+    figura.forEach(f=>{f.seleccionado=false});
 }
+
+// function mouseCheck(e){
+//     arrastrando=false;
+//     borrarPantalla();
+//     if (modo=='normal'){
+//         for (x=0;x<10 ;x++){
+//             obj=figura[x].checkMouse(e.layerX,e.layerY);
+//             if (obj) { return obj }
+//         }
+//     }
+//     else if (modo=='arrastrar'&& obj) {
+//         const Xoriginal=obj.x;
+//         const Yoriginal=obj.y;
+//         obj.setCoords(e.layerX,e.layerY);
+//         figura.forEach(f=>{
+//             if (f.seleccionado) f.mover(e.movementX,e.movementY);
+//         })
+//         arrastrando=true;
+//     }
+//     else if (modo=='selectorRectangular'){
+//         selectorRectangular.setFin(e.layerX,e.layerY);
+//         selectorRectangular.check(figura);
+//     }
+// }
 function mouseDown(e){
     if (mouseCheck(e)){ modo='arrastrar';}
     else{
@@ -116,12 +157,14 @@ function mouseDown(e){
 
 }
 
+/* fin sector mouse*/
 
 function borrarPantalla(){
     ctx.fillStyle='#ffffff';
     ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.putImageData(fondoGris,0,0);
-    refresh();
+    figura.forEach(f=>{f.sombrear=false;})
+    
 }
 
 function refresh(){
