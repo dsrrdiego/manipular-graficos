@@ -33,8 +33,7 @@ imagen.onload=function(){
     
     //dibujar 10 figuras aleatorias
     for (let i=0;i<10;i++){
-        const figuraTipo=Math.floor(Math.random()*2);
-        dibujarFiguraAleatoria(figuraTipo,i,fondoColor,sombra);
+        dibujarFiguraAleatoria(i,fondoColor,sombra);
     }
     borrarPantalla();
     refresh();
@@ -46,7 +45,7 @@ imagen.onload=function(){
     canvas.addEventListener('click',function(e){ nucleo(clickete,e)});
     document.addEventListener("keydown", (e)=>{nucleo(tecla,e)});
 }
-    
+
 //** sector mouse y teclado**********************************************************************/
 function mouseMove(e){
     arrastrando=false;
@@ -64,7 +63,7 @@ function mouseMove(e){
             if (fig) fig.mover(e.movementX,e.movementY);
             break;
             
-        case 'selectorRectangular':
+            case 'selectorRectangular':
             arrastrando=true;
             selectorRectangular.setFin(e.layerX,e.layerY);
             selectorRectangular.check(figura,e.ctrlKey);
@@ -108,10 +107,10 @@ function tecla(e){
         case 'ArrowUp':
             y-=10;
             break;
-        case 'ArrowDown':
-            y+=10;
-            break;
-        case 'ArrowLeft':
+            case 'ArrowDown':
+                y+=10;
+                break;
+                case 'ArrowLeft':
             x-=10;
             break;
         case 'ArrowRight':
@@ -138,7 +137,7 @@ function engrisar(img){
         img.data[i+1]=prom;
         img.data[i+2]=prom;
     }
-return img;
+    return img;
 }
 
 
@@ -158,24 +157,15 @@ function refresh(){
     if (selectorRectangular.activo) selectorRectangular.dibujar();
 }
 
-function dibujarFiguraAleatoria(tipo, indice,fondo,sombra){
+function dibujarFiguraAleatoria(indice,fondo,sombra){
     const figuraTipo=[Rectangulo,Circulo];
+    const tipo=Math.floor(Math.random()*2);
     const ancho=Math.floor(Math.random()*100)+20;
     const alto=Math.floor(Math.random()*100)+20;
     const x=Math.floor(Math.random()*canvas.width-ancho*2)+ancho; //o radio, depende de la figura
     const y=Math.floor(Math.random()*canvas.height-alto*2)+alto;
     
     figura[indice]=new figuraTipo[tipo](x,y,ancho,alto,fondo,sombra,ctx);
-
-    // switch (tipo){
-    //     case 0:
-    //         break;
-    //     case 1:
-    //         figura[indice]=new Circulo(x,y,ancho,fondo,sombra,ctx);
-    //         break;
-    //     //figura 2,
-    //     //figura 3,
-    // }
 }
 
 
