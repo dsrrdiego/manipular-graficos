@@ -21,10 +21,8 @@ class Figura{
         }else{
             this.ctx.fillStyle=this.fill;
         }
-        if (this.dobleClickeado){
-            if (this.ancho>200 || this.ancho<50) this.sentido*=-1;
-            this.ancho+=this.sentido;
-        }
+
+        
     }
 
     seleccionar(){
@@ -41,8 +39,6 @@ class Figura{
     }
     dblClick(){
         (this.dobleClickeado)?this.dobleClickeado=false:this.dobleClickeado=true;
-        console.log(this.dobleClickeado);
-        
     }
     
 }
@@ -54,6 +50,10 @@ class Circulo extends Figura{
     }
     dibujar(){
         super.dibujar();
+        if (this.dobleClickeado){
+            if (this.radio>200||this.radio<50) this.sentido*=-1;
+            this.radio+=this.sentido;
+        }
         this.ctx.beginPath();
         this.ctx.arc(this.x,this.y,this.radio,0,2*Math.PI);
         this.ctx.fill();
@@ -80,6 +80,11 @@ class Rectangulo extends Figura{
     }
     dibujar(){
         super.dibujar();
+        if (this.dobleClickeado){
+            if (this.ancho>200 ||this.ancho<50) this.sentido*=-1;
+            this.ancho+=this.sentido;
+        }
+        
         this.ctx.fillRect(this.x-this.ancho/2,this.y-this.alto/2,this.ancho,this.alto);
         if (this.seleccionado){
             this.ctx.strokeRect(this.x-this.ancho/2,this.y-this.alto/2,this.ancho,this.alto);
@@ -102,6 +107,10 @@ class Rombo extends Figura{
     }
     dibujar(){
         super.dibujar();
+        if (this.dobleClickeado){
+            if (this.seudoRadio>200|| this.seudoRadio<50) this.sentido*=-1;
+            this.seudoRadio+=this.sentido;
+        }
 
         //4 puntos de izq a derecha sentido horario
         

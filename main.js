@@ -181,5 +181,5 @@ function dibujarFiguraAleatoria(indice,fondo,sombra){
 
 /*******instrucciones ************************************************/
 document.getElementById('instrucciones').addEventListener('click',()=>{
-    alert('* Arrastre las figuras para ver los colores de fondo. \n *Clickee de a uno para hacer seleccion multiple o dibuje un rectangulo con el mouse. \n *Tecla control para incluir otro rectángulo. \n *Utilice el mouse o las flechas para mover. \n *Aplique filtros de colores.')});
+    alert(' 💠 Arrastre las figuras para ver los colores de fondo. \n 💠 Clickee de a uno para hacer seleccion multiple o dibuje un rectangulo con el mouse. \n 💠 Tecla control para incluir otro rectángulo. \n 💠 Utilice el mouse o las flechas para mover. \n 💠 Doble click para animar. \n 💠 Aplique filtros de colores.')});
         
