@@ -80,8 +80,8 @@ class Rectangulo extends Figura{
     }
 
     mouseCheck(x,y){
-        if (x>this.x && x < this.x+this.ancho
-            && y>this.y && y<this.y+this.alto) {
+        if (x>this.x -this.ancho/2&& x < this.x+this.ancho/2
+            && y>this.y -this.alto/2&& y<this.y+this.alto/2) {
                 return this }
             else {return false};
 
