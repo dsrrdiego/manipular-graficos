@@ -28,13 +28,11 @@ imagen.onload=function(){
     
     //patron relleno para el mouseOver.
     const sombra=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-    sombra.addColorStop(0,'red');
-    sombra.addColorStop(1,'green');
+    sombra.addColorStop(0,'#ff000050');
+    sombra.addColorStop(1,'#50ff0050');
     
     //dibujar 10 figuras aleatorias
-    for (let i=0;i<10;i++){
-        dibujarFiguraAleatoria(i,fondoColor,sombra);
-    }
+    for (let i=0;i<10;i++) dibujarFiguraAleatoria(i,fondoColor,sombra);
     borrarPantalla();
     refresh();
     

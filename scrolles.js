@@ -37,7 +37,7 @@ function filtrar(v,color){
     img=fondoGris;
     copiar(fondoGrisOriginal,img);
     for (let i=0;i<img.width *img.height*4;i+=4){ 
-        img.data[i+color]+= v;
+        img.data[i+color]+= (Math.max(Math.min(v,255),0));
     }
     borrarPantalla();
     refresh();
