@@ -95,3 +95,48 @@ class Rectangulo extends Figura{
     }
 }
 
+class Rombo extends Figura{
+    constructor(x,y,seudoRadio,nada,fondo,sombra,ctx){
+        super (x,y,x,y, seudoRadio*2,seudoRadio*2,fondo,sombra,ctx);
+        this.seudoRadio=seudoRadio;
+    }
+    dibujar(){
+        super.dibujar();
+
+        //4 puntos de izq a derecha sentido horario
+        
+        let x=[];let y=[];
+        x[0]=this.x-this.seudoRadio   ; y[0]=this.y;
+        x[1]=this.x                   ; y[1]=this.y-this.seudoRadio;
+        x[2]=this.x+this.seudoRadio   ; y[2]=this.y;
+        x[3]=this.x                   ; y[3]=this.y+this.seudoRadio;
+        this.ctx.beginPath();
+        this.ctx.moveTo(x[0],y[0]);
+        for (let i=1;i<5;i++){
+            this.ctx.lineTo(x[i],y[i]);
+        }
+        this.ctx.fill();
+        // this.ctx.stroke();
+        this.ctx.closePath();
+        
+
+        if (this.seleccionado){
+            this.ctx.strokeRect(this.x,this.y,this.ancho,this.alto);
+        }
+    }
+
+    mouseCheck(x,y){
+        const difX=Math.abs(this.x-x);
+        const difY=Math.abs(this.y-y);
+        if (x>this.x-this.seudoRadio+difY
+            &&x< this.x+this.seudoRadio-difY
+            &&y>this.y-this.seudoRadio+difX
+            &&y<this.y+this.seudoRadio-difX) return this;
+
+        // if (x>this.x && x < this.x+this.ancho
+        //     && y>this.y && y<this.y+this.alto) {
+        //         return this }
+        //     else {return false};
+
+    }
+}
