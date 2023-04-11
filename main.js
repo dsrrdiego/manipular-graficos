@@ -8,6 +8,7 @@ const figura=[];
 const selectorRectangular=new SelectorRectangular(ctx);
 let arrastrando=false; //bandera para evitar que se selecciones al arrastrar
 let modo='normal'; //modo del mouse, normal , arrastrando o selectorRectangular
+let mouse={};
 
 imagen.onload=function(){
     
@@ -37,11 +38,13 @@ imagen.onload=function(){
     refresh();
     
     //asignar los eventos:
-    canvas.addEventListener('mousemove',function(e){nucleo(mouseMove,e)});
+    canvas.addEventListener('mousemove',function(e){mouse=e});
     canvas.addEventListener('mousedown',function(e){nucleo(mouseDown,e);})
     canvas.addEventListener('mouseup',function(){modo='normal',selectorRectangular.activo=false}); 
     canvas.addEventListener('click',function(e){ nucleo(clickete,e)});
+    canvas.addEventListener('dblclick',function(e){ nucleo(dblClickete,e)});
     document.addEventListener("keydown", (e)=>{nucleo(tecla,e)});
+    setInterval(function(){nucleo(mouseMove,mouse)},1);
 }
 
 //** sector mouse y teclado**********************************************************************/
@@ -87,6 +90,14 @@ function clickete(e){
         });
         if (!bandera) desSelecionarTodo();  
     }
+}
+
+function dblClickete(e){
+        figura.forEach(f => {
+            if (f.mouseCheck(e.layerX,e.layerY)){
+                f.dblClick();
+            }
+        });
 }
 
 function mouseDown(e){

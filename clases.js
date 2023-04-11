@@ -12,6 +12,8 @@ class Figura{
         this.ctx.strokeStyle='red';
         this.sombrear=false;
         this.seleccionado=false;
+        this.dobleClickeado=false;
+        this.sentido=1;
     }
     dibujar(){
         if (this.sombrear){ 
@@ -19,14 +21,14 @@ class Figura{
         }else{
             this.ctx.fillStyle=this.fill;
         }
+        if (this.dobleClickeado){
+            if (this.ancho>200 || this.ancho<50) this.sentido*=-1;
+            this.ancho+=this.sentido;
+        }
     }
 
     seleccionar(){
-        if (!this.seleccionado){
-            this.seleccionado=true;
-        } else{
-            this.seleccionado=false;
-        }
+        (!this.seleccionado)? this.seleccionado=true: this.seleccionado=false;
     }    
     mover(x,y){
         this.x+=x;
@@ -36,6 +38,9 @@ class Figura{
         if (x < this.x-this.ancho/2 && x+w> this.x+this.ancho/2
             && y<this.y-this.alto/2 && y+h> this.y+this.alto/2
                 && !this.seleccionado) this.seleccionar();
+    }
+    dblClick(){
+        (this.dobleClickeado)?this.dobleClickeado=false:this.dobleClickeado=true;
     }
     
 }
