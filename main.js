@@ -158,7 +158,6 @@ function desSombrearTodos(){
 }
 function borrarPantalla(){
     ctx.fillStyle='#ffffff';
-    // ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.putImageData(fondoGris,0,0);
 }
 
