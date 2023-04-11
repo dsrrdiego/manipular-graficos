@@ -170,7 +170,7 @@ function refresh(){
 function dibujarFiguraAleatoria(indice,fondo,sombra){
     const figuraTipo=[Rectangulo,Circulo,Rombo];
     const tipo=Math.floor(Math.random()*3);
-    const ancho=Math.floor(Math.random()*100)+20;
+    const ancho=Math.floor(Math.random()*69)+50;
     const alto=Math.floor(Math.random()*100)+20;
     const x=Math.floor(Math.random()*canvas.width-ancho*2)+ancho; //o radio, depende de la figura
     const y=Math.floor(Math.random()*canvas.height-alto*2)+alto;

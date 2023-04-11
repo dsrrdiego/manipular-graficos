@@ -81,7 +81,7 @@ class Rectangulo extends Figura{
     dibujar(){
         super.dibujar();
         if (this.dobleClickeado){
-            if (this.ancho>200 ||this.ancho<50) this.sentido*=-1;
+            if (this.ancho>120 ||this.ancho<50) this.sentido*=-1;
             this.ancho+=this.sentido;
         }
         
