@@ -34,7 +34,7 @@ class Figura{
 }
 
 class Circulo extends Figura{
-    constructor(x,y,radio,fondo,sombra,ctx){
+    constructor(x,y,radio,nada,fondo,sombra,ctx){
         super (x,y,fondo,sombra,ctx);
         this.radio=radio;
     }

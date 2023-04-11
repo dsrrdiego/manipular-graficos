@@ -158,23 +158,24 @@ function refresh(){
     if (selectorRectangular.activo) selectorRectangular.dibujar();
 }
 
-
 function dibujarFiguraAleatoria(tipo, indice,fondo,sombra){
+    const figuraTipo=[Rectangulo,Circulo];
     const ancho=Math.floor(Math.random()*100)+20;
     const alto=Math.floor(Math.random()*100)+20;
-    const x=Math.floor(Math.random()*canvas.width-ancho*2)+ancho;
+    const x=Math.floor(Math.random()*canvas.width-ancho*2)+ancho; //o radio, depende de la figura
     const y=Math.floor(Math.random()*canvas.height-alto*2)+alto;
     
-    switch (tipo){
-        case 0:
-            figura[indice]=new Rectangulo(x,y,ancho,alto,fondo,sombra,ctx);
-            break;
-        case 1:
-            figura[indice]=new Circulo(x,y,ancho,fondo,sombra,ctx);
-            break;
-        //figura 2,
-        //figura 3,
-    }
+    figura[indice]=new figuraTipo[tipo](x,y,ancho,alto,fondo,sombra,ctx);
+
+    // switch (tipo){
+    //     case 0:
+    //         break;
+    //     case 1:
+    //         figura[indice]=new Circulo(x,y,ancho,fondo,sombra,ctx);
+    //         break;
+    //     //figura 2,
+    //     //figura 3,
+    // }
 }
 
 
