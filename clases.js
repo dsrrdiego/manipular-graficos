@@ -33,6 +33,8 @@ class Figura{
     mover(x,y){
         this.x+=x;
         this.y+=y;
+        this.ejeX+=x;
+        this.ejeY+=y;
     }
     chequearCon(x,y,w,h){ //si entra en el selector multiple
         if (x < this.ejeX-this.ancho/2 && x+w> this.ejeX+this.ancho/2
@@ -52,13 +54,8 @@ class Circulo extends Figura{
         this.ctx.beginPath();
         this.ctx.arc(this.x,this.y,this.radio,0,2*Math.PI);
         this.ctx.fill();
+        if (this.seleccionado) this.ctx.stroke();
         this.ctx.closePath();
-        if (this.seleccionado){
-            this.ctx.beginPath();
-            this.ctx.arc(this.x,this.y,this.radio,0,2*Math.PI);
-            this.ctx.stroke();
-            this.ctx.closePath();
-        }
     }
     marcar(){
         super.dibujar();
@@ -112,17 +109,11 @@ class Rombo extends Figura{
         x[3]=this.x                   ; y[3]=this.y+this.seudoRadio;
         this.ctx.beginPath();
         this.ctx.moveTo(x[0],y[0]);
-        for (let i=1;i<5;i++){
-            this.ctx.lineTo(x[i],y[i]);
-        }
+        for (let i=1;i<5;i++) this.ctx.lineTo(x[i],y[i]);
+        this.ctx.lineTo(x[0],y[0]);
         this.ctx.fill();
-        // this.ctx.stroke();
+        if (this.seleccionado) this.ctx.stroke();
         this.ctx.closePath();
-        
-
-        if (this.seleccionado){
-            this.ctx.strokeRect(this.x,this.y,this.ancho,this.alto);
-        }
     }
 
     mouseCheck(x,y){
@@ -132,11 +123,6 @@ class Rombo extends Figura{
             &&x< this.x+this.seudoRadio-difY
             &&y>this.y-this.seudoRadio+difX
             &&y<this.y+this.seudoRadio-difX) return this;
-
-        // if (x>this.x && x < this.x+this.ancho
-        //     && y>this.y && y<this.y+this.alto) {
-        //         return this }
-        //     else {return false};
 
     }
 }
