@@ -38,13 +38,13 @@ imagen.onload=function(){
     refresh();
     
     //asignar los eventos:
-    canvas.addEventListener('mousemove',function(e){mouse=e});
+    canvas.addEventListener('mousemove',function(e){mouseMove(e);mouse=e});
     canvas.addEventListener('mousedown',function(e){nucleo(mouseDown,e);})
     canvas.addEventListener('mouseup',function(){modo='normal',selectorRectangular.activo=false}); 
     canvas.addEventListener('click',function(e){ nucleo(clickete,e)});
     canvas.addEventListener('dblclick',function(e){ nucleo(dblClickete,e)});
     document.addEventListener("keydown", (e)=>{nucleo(tecla,e)});
-    setInterval(function(){nucleo(mouseMove,mouse)},1);
+    setInterval(function(){nucleo(nada)},100);
 }
 
 //** sector mouse y teclado**********************************************************************/
@@ -101,6 +101,8 @@ function dblClickete(e){
 }
 
 function mouseDown(e){
+    console.log(e);
+    
     if (mouseCheck(e)){ modo='arrastrar';}
     else{
         modo='selectorRectangular'
@@ -135,9 +137,10 @@ function tecla(e){
 
 function nucleo(funcion,e){
     borrarPantalla();
-    funcion(e);
+    if (funcion!=nada) funcion(e);
     refresh();
 }
+function nada(){}
 
 function engrisar(img){
     for (let i=0;i<img.width *img.height*4;i+=4){ 

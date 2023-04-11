@@ -41,6 +41,8 @@ class Figura{
     }
     dblClick(){
         (this.dobleClickeado)?this.dobleClickeado=false:this.dobleClickeado=true;
+        console.log(this.dobleClickeado);
+        
     }
     
 }
