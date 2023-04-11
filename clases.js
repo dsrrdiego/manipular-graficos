@@ -1,8 +1,12 @@
 
 class Figura{
-    constructor(x,y,fondo,sombra,ctx){
+    constructor(x,y,ejeX,ejeY,ancho,alto,fondo,sombra,ctx){
         this.x=x;
         this.y=y;
+        this.ejeX=ejeX;
+        this.ejeY=ejeY;
+        this.ancho=ancho;
+        this.alto=alto;
         this.fill=fondo;
         this.sombra=sombra;
         this.ctx=ctx;
@@ -30,12 +34,17 @@ class Figura{
         this.x+=x;
         this.y+=y;
     }
+    chequearCon(x,y,w,h){ //si entra en el selector multiple
+        if (x < this.ejeX-this.ancho/2 && x+w> this.ejeX+this.ancho/2
+            && y<this.ejeY-this.alto/2 && y+h> this.ejeY+this.alto/2
+                && !this.seleccionado) this.seleccionar();
+    }
     
 }
 
 class Circulo extends Figura{
     constructor(x,y,radio,nada,fondo,sombra,ctx){
-        super (x,y,fondo,sombra,ctx);
+        super (x,y,x,y,radio*2,radio*2,fondo,sombra,ctx);
         this.radio=radio;
     }
     dibujar(){
@@ -62,20 +71,12 @@ class Circulo extends Figura{
             return false;
         }
     }
-    chequearCon(x,y,w,h){ //si entra en el selector multiple
-        if (x < this.x-this.radio && x+w> this.x+this.radio
-            && y<this.y-this.radio && y+h> this.y+this.radio) {
-                if (!this.seleccionado) this.seleccionar();
-            }
-    }
 
 }
 
 class Rectangulo extends Figura{
     constructor(x,y,ancho,alto,fondo,sombra,ctx){
-        super (x,y,fondo,sombra,ctx);
-        this.ancho=ancho;
-        this.alto=alto;
+        super (x,y,x+ancho/2,y+alto/2, ancho, alto,fondo,sombra,ctx);
     }
     dibujar(){
         super.dibujar();
@@ -92,18 +93,5 @@ class Rectangulo extends Figura{
             else {return false};
 
     }
-    
-    chequearCon(x,y,w,h){ //si entra en el selector multiple
-
-
-        if (x < this.x && x+w> this.x+this.ancho
-            && y<this.y && y+h> this.y+this.alto) {
-                if (!this.seleccionado) this.seleccionar();
-            }
-            
-
-
-    }
-
 }
 
