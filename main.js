@@ -52,7 +52,7 @@ function mouseMove(e){
     const fig=mouseCheck(e);
     switch (modo){
         case 'normal':
-            if (fig) fig.sombrear=true;
+            if (fig) {desSombrearTodos();fig.sombrear=true;};
             break;
             
             case 'arrastrar':
@@ -76,6 +76,7 @@ function mouseCheck(e){
         const fig=figura[i].mouseCheck(e.layerX-12,e.layerY-12);
         if (fig) return fig;
     }
+    desSombrearTodos();
 }
 
 function clickete(e){
@@ -87,7 +88,7 @@ function clickete(e){
                 bandera=true;
             }
         });
-        if (!bandera) desSelecionarTodo();  
+        if (!bandera) desSeleccionarTodo();  
     }
 }
 
@@ -149,15 +150,16 @@ function engrisar(img){
 }
 
 
-function desSelecionarTodo(){
-    figura.forEach(f=>{f.seleccionado=false});
+function desSeleccionarTodo(){
+    figura.forEach(f=>{f.seleccionado=false;});
 }
-
+function desSombrearTodos(){
+    figura.forEach(f=>{f.sombrear=false;})
+}
 function borrarPantalla(){
     ctx.fillStyle='#ffffff';
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    // ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.putImageData(fondoGris,0,0);
-    figura.forEach(f=>{f.sombrear=false;})
 }
 
 function refresh(){
